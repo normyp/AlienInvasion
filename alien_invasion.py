@@ -105,8 +105,14 @@ class AlienInvasion:
             self.sb.prep_score()
             self.sb.check_high_score()
             print(self.stats.high_score)
-            f = open("highscore.txt", "w")
-            f.write(str(self.stats.high_score))
+
+            f = open("highscore.txt", "r")
+            old_high_score = f.read()
+            f.close()
+            if int(self.stats.high_score) > int(old_high_score):
+                f = open("highscore.txt", "w")
+                f.write(str(self.stats.high_score))
+                old_high_score = self.stats.high_score
         if not self.aliens:
             self.bullets.empty()
             self._create_fleet()
