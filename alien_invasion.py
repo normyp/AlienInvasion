@@ -71,6 +71,7 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             #Decrement ships_left
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
 
             self.aliens.empty()
             self.bullets.empty()
@@ -103,6 +104,9 @@ class AlienInvasion:
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
             self.sb.check_high_score()
+            print(self.stats.high_score)
+            f = open("highscore.txt", "w")
+            f.write(str(self.stats.high_score))
         if not self.aliens:
             self.bullets.empty()
             self._create_fleet()
@@ -135,6 +139,7 @@ class AlienInvasion:
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                #Write highscore to a file
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
@@ -156,6 +161,7 @@ class AlienInvasion:
             self._start_game()
             self.sb.prep_score()
             self.sb.prep_level()
+            self.sb.prep_ships()
 
     def _check_easy_button(self, mouse_pos):
         button_clicked = self.easy_button.rect.collidepoint(mouse_pos)

@@ -5,7 +5,10 @@ class GameStats:
         self.reset_stats()
         self.game_active = False
         #High score should never be reset.
-        self.high_score = 0
+        f = open("highscore.txt", "r")
+        self.high_score = f.read()
+        f.close()
+
 
     def reset_stats(self):
         self.ships_left = self.settings.ship_limit
